@@ -87,12 +87,20 @@ class ReCaptchaBuilderV3 extends ReCaptchaBuilder
         }
 
         $html .= "<script>
-                    var csrfToken = document.head.querySelector('meta[name=\"csrf-token\"]');
-                  grecaptcha.ready(function() {
-                      grecaptcha.execute('{$this->api_site_key}', {action: '{$action}'}).then(function(token) {
-                        {$validate_function}
-                      });
-                  });
+                 var csrfToken = document.head.querySelector('meta[name=\"csrf-token\"]');
+                    function grecaptcha_execute(){
+				        grecaptcha.execute('{$this->api_site_key}', {action: '{$action}'}).then(function(token) {
+                            {$validate_function}
+                        });
+			        }
+                    grecaptcha.ready(function() {
+                        grecaptcha_execute();
+                    });
+                    $(document).ready(function() {
+                        $(\"form\").change(function(){
+                            grecaptcha_execute();
+                        });
+                    });
 		     </script>";
 
         return $html;
