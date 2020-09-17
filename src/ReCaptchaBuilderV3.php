@@ -91,7 +91,7 @@ class ReCaptchaBuilderV3 extends ReCaptchaBuilder
                     function grecaptcha_execute(){
 				        grecaptcha.execute('{$this->api_site_key}', {action: '{$action}'}).then(function(token) {
                             {$validate_function}
-                            document.getElementById(\"recaptcha_response\").value = token;
+                            document.getElementById(\"g-recaptcha-response\").value = token;
                         });
 			        }
                     grecaptcha.ready(function() {
